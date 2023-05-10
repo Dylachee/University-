@@ -4,9 +4,14 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Aim, Book, Objective, Project, SharedFiles
+from .models import Aim, Book, Objective, Project, SharedFiles, Meeting
 from .serializers import (AimSerializer, BookSerializer, ObjectiveSerializer,
-                          ProjectSerializer, SharedFilesSerializer)
+                          ProjectSerializer, SharedFilesSerializer,MeetingSerializer)
+from rest_framework.parsers import MultiPartParser, FormParser
+
+
+
+
 
 
 class SharedFileView(generics.ListCreateAPIView):
@@ -67,3 +72,17 @@ class ObjectiveCreateView(generics.CreateAPIView):
         if not getattr(self, 'swagger_fake_view', False):
             context['aim'] = self.aim
         return context
+
+class MeetingListCreateView(generics.ListCreateAPIView):
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingSerializer
+    parser_classes = (MultiPartParser, FormParser)
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class MeetingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingSerializer
+    permission_classes = (IsAuthenticated,)

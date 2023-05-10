@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'ckeditor',
 
     'rest_framework',
     'drf_yasg',
@@ -233,3 +234,5 @@ LOGGING = {
         },
     },
 }
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'

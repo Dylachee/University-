@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Aim, Book, File, Objective, Project, SharedFiles, Organization
+from .models import Aim, Book, File, Objective, Project, SharedFiles, Organization , Meeting
 
 
 class FileInline(admin.TabularInline):
@@ -14,4 +14,4 @@ class SharedFilesAdmin(admin.ModelAdmin):
 
 
 admin.site.register(SharedFiles, SharedFilesAdmin)
-admin.site.register([Book, Aim, Objective, Project, Organization])
+admin.site.register([Book, Aim, Objective, Project, Organization , Meeting])

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Aim, Book, File, Objective, Project, SharedFiles
+from .models import Aim, Book, File, Objective, Project, SharedFiles , Meeting
 
 
 class FileSerializer(serializers.ModelSerializer):
@@ -84,3 +84,8 @@ class ProjectSerializer(serializers.ModelSerializer):
                 'You must be a member of an organization to create a project')
         attrs['organization'] = user.profile.organization
         return attrs
+
+class MeetingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meeting
+        fields = '__all__'

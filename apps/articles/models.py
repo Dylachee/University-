@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from slugify import slugify
 from datetime import datetime
+from ckeditor.fields import RichTextField
 
 User = get_user_model()
 
@@ -9,7 +10,7 @@ User = get_user_model()
 class Article(models.Model):
     slug = models.SlugField(primary_key=True, max_length=150, blank=True)
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = RichTextField()
     image = models.ImageField(upload_to='articles', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

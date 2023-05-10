@@ -5,6 +5,7 @@ from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from ckeditor_uploader import views as ckeditor_views
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -28,6 +29,7 @@ urlpatterns = [
     path('auth/', include('apps.user.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('apps.partners.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 
 ]
 
