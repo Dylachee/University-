@@ -5,18 +5,17 @@ from rest_framework import serializers
 
 
 from .models import Profile
-from ..partners.models import SharedFile
-from ..partners.serializers import SharedFileSerializer
+from ..partners.serializers import SharedFilesSerializer
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        exclude = ['user']
+        exclude = ['user', 'organization']
 
     def to_representation(self, instance):
         repr_ = super().to_representation(instance)
-        repr_['shareds'] = SharedFileSerializer(instance.shared_files.all(), many=True).data
+        repr_['shared'] = SharedFilesSerializer(instance.shared_files.all(), many=True).data
         return repr_
     
 

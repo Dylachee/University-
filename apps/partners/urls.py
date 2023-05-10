@@ -1,22 +1,17 @@
-from django.urls import path
-from .views import (
-    SharedFileUploadView, 
-    SharedFileListView , 
-    BookListCreateView, 
-    BookDetailView , 
-    ProjectListCreateView,
-    ProjectDetailView,
-    AimCreateView,
-    ObjectiveCreateView,)
+from django.urls import include, path, re_path
+from rest_framework.routers import DefaultRouter
 
+from .views import (AimListView, BookViewSet, ObjectiveCreateView,
+                    SharedFileView, ProjectViewSet)
+
+router = DefaultRouter()
+router.register('books', BookViewSet)
+router.register('projects', ProjectViewSet)
 
 urlpatterns = [
-    path('file.upload/', SharedFileUploadView.as_view(), name='upload'),
-    path('all.file.list/', SharedFileListView.as_view(), name='list'),
-    path('api/books/', BookListCreateView.as_view(), name='book_list_create'),
-    path('api/books/<int:pk>/', BookDetailView.as_view(), name='book_detail'),
-    path('api/projects/', ProjectListCreateView.as_view(), name='project_list_create'),
-    path('api/projects/<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
-    path('api/aims/', AimCreateView.as_view(), name='aim_create'),
-    path('api/objectives/', ObjectiveCreateView.as_view(), name='objective_create'),
+    re_path(r'projects/(?P<id>\d+)/aims/', AimListView.as_view(), name='aim_create'),
+    re_path(r'aims/(?P<id>\d+)/objectives/',
+         ObjectiveCreateView.as_view(), name='objective_create'),
+    path('files/', SharedFileView.as_view(), name='files'),
+    path('', include(router.urls), name='books'),
 ]

@@ -1,11 +1,12 @@
 run:
-	python3 manage.py runserver
+	venv/bin/python manage.py runserver
+
 migrate:
-	python3 manage.py makemigrations
-	python3 manage.py migrate
+	venv/bin/python manage.py makemigrations
+	venv/bin/python manage.py migrate
 
 kill:
 	sudo fuser -k 8000/tcp
 
 create:
-	python3 manage.py createsuperuser
+	venv/bin/python manage.py createsuperuser --username admin --email admin@admin.com

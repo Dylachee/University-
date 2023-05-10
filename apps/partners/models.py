@@ -1,15 +1,27 @@
 from django.db import models
-from django.contrib.auth.models import User
-from ..user.models import Profile
 
 
-class SharedFile(models.Model):
+class Organization(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class SharedFiles(models.Model):
+    user = models.ForeignKey(
+        'auth.User', related_name='shared_files', on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=255)
     upload_date = models.DateTimeField(auto_now_add=True)
-    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    uploaded_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
+
+class File(models.Model):
+    shared = models.ForeignKey(
+        SharedFiles, on_delete=models.CASCADE, related_name='files')
     file = models.FileField(upload_to='shared_files/')
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='shared_files')
+
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
@@ -19,7 +31,10 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+
 class Project(models.Model):
+    organization = models.ForeignKey(
+        Organization, on_delete=models.CASCADE, related_name='projects')
     title = models.CharField(max_length=255)
     description = models.TextField()
     start_date = models.DateField()
@@ -29,16 +44,25 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+
 class Aim(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='aims')
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name='aims')
     description = models.TextField()
 
     def __str__(self):
         return self.description
+
 
 class Objective(models.Model):
-    aim = models.ForeignKey(Aim, on_delete=models.CASCADE, related_name='objectives')
+    aim = models.ForeignKey(Aim, on_delete=models.CASCADE,
+                            related_name='objectives')
     description = models.TextField()
 
     def __str__(self):
         return self.description
+
+
+# TODO
+# class Meeting(models.Model):
+# class Report(models.Model):
