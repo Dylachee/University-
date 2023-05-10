@@ -10,6 +10,11 @@ class SharedFileUploadView(generics.CreateAPIView):
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = SharedFileSerializer
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({'request': self.request})
+        return context
+
 class SharedFileListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = SharedFileSerializer

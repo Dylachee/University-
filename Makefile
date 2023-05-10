@@ -7,5 +7,5 @@ migrate:
 kill:
 	sudo fuser -k 8000/tcp
 
-craete:
+create:
 	python3 manage.py createsuperuser
