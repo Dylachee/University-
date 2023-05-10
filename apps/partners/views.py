@@ -1,8 +1,9 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
-from .models import SharedFile , Book
-from .serializers import SharedFileSerializer , BookSerializer
+from .models import SharedFile , Book , Project, Aim, Objective
+from .serializers import SharedFileSerializer , BookSerializer , ProjectSerializer, AimSerializer, ObjectiveSerializer
+
 
 class SharedFileUploadView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -21,3 +22,17 @@ class BookListCreateView(generics.ListCreateAPIView):
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+class ProjectListCreateView(generics.ListCreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+class AimCreateView(generics.CreateAPIView):
+    serializer_class = AimSerializer
+
+class ObjectiveCreateView(generics.CreateAPIView):
+    serializer_class = ObjectiveSerializer
