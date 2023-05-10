@@ -1,7 +1,17 @@
 from django.contrib import admin
-from .models import SharedFile, Book, Project, Aim, Objective
 
-models_to_register = [SharedFile, Book, Project, Aim, Objective]
+from .models import Aim, Book, File, Objective, Project, SharedFiles, Organization
 
-for model in models_to_register:
-    admin.site.register(model)
+
+class FileInline(admin.TabularInline):
+    model = File
+    extra = 3
+
+
+class SharedFilesAdmin(admin.ModelAdmin):
+    list_display = ['title', 'uploaded_by', 'upload_date']
+    inlines = [FileInline]
+
+
+admin.site.register(SharedFiles, SharedFilesAdmin)
+admin.site.register([Book, Aim, Objective, Project, Organization])

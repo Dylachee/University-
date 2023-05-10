@@ -6,7 +6,7 @@ from decouple import config
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_URL = config('BASE_URL')
+BASE_URL = config('BASE_URL', default='http://localhost')
 
 SECRET_KEY = config('SECRET_KEY')
 
