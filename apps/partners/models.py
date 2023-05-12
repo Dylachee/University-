@@ -3,6 +3,10 @@ from django.db import models
 
 class Organization(models.Model):
     title = models.CharField(max_length=255)
+    insitution =  models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    avatar = models.ImageField(upload_to='organizations/', blank=True, null=True)
     description = models.TextField()
 
     def __str__(self):

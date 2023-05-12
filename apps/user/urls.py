@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from .views import ProfileViewSet
+from .views import ProfileViewSet, SharedMe
 
 
 urlpatterns = [
@@ -9,5 +9,6 @@ urlpatterns = [
         'get': 'retrieve', })),
     path('user/me/profile/', ProfileViewSet.as_view({
         'put': 'me',
-        'patch': 'me', }))
+        'patch': 'me', })),
+    path('user/me/shared/', SharedMe.as_view()),
 ]

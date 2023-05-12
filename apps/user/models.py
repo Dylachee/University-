@@ -14,7 +14,7 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     cover = models.ImageField(
         upload_to='users', null=True, blank=True)
-    organization = models.ForeignKey(
+    organization = models.OneToOneField(
         'partners.Organization', on_delete=models.SET_NULL, null=True)
 
     class Meta:
