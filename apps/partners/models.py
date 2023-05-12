@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 
 class Organization(models.Model):
@@ -7,7 +9,7 @@ class Organization(models.Model):
     country = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     avatar = models.ImageField(upload_to='organizations/', blank=True, null=True)
-    description = models.TextField()
+    description = RichTextField()
 
     def __str__(self):
         return self.title
@@ -38,7 +40,7 @@ class Book(models.Model):
 
 class Project(models.Model):
     organization = models.ForeignKey(
-        Organization, on_delete=models.CASCADE, related_name='projects')
+        Organization, on_delete=models.CASCADE, related_name='projects', default=None)
     title = models.CharField(max_length=255)
     description = models.TextField()
     start_date = models.DateField()
@@ -66,7 +68,15 @@ class Objective(models.Model):
     def __str__(self):
         return self.description
 
+class Meeting(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    photo = models.ImageField(upload_to='meeting_photos/', blank=True, null=True)
+    video = models.FileField(upload_to='meeting_videos/', blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True, auto_now_add=True)
 
+    def __str__(self):
+        return self.title
 # TODO
 # class Meeting(models.Model):
 # class Report(models.Model):

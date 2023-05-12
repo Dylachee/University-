@@ -13,3 +13,4 @@ python-slugify
 django-allauth
 django-rest-auth
 django
+django-ckeditor
