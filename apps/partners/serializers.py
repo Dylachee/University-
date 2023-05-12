@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import (Aim, Book, File, Objective, Organization, Project,
-                     SharedFiles)
+                     SharedFiles, Meeting)
 
 
 class FileSerializer(serializers.ModelSerializer):
