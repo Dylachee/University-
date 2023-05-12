@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import Aim, Book, File, Objective, Project, SharedFiles , Meeting
+from .models import (Aim, Book, File, Objective, Organization, Project,
+                     SharedFiles)
 
 
 class FileSerializer(serializers.ModelSerializer):
@@ -76,7 +77,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ['id', 'title', 'description',
                   'start_date', 'end_date', 'is_completed']
-    
+
     def validate(self, attrs):
         user = self.context['request'].user
         if not user.profile.organization:
@@ -84,6 +85,13 @@ class ProjectSerializer(serializers.ModelSerializer):
                 'You must be a member of an organization to create a project')
         attrs['organization'] = user.profile.organization
         return attrs
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = '__all__'
+
 
 class MeetingSerializer(serializers.ModelSerializer):
     class Meta:

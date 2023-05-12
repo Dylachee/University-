@@ -5,6 +5,10 @@ from ckeditor.fields import RichTextField
 
 class Organization(models.Model):
     title = models.CharField(max_length=255)
+    insitution =  models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    avatar = models.ImageField(upload_to='organizations/', blank=True, null=True)
     description = RichTextField()
 
     def __str__(self):

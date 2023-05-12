@@ -1,28 +1,27 @@
-from django.contrib.auth.models import User
 from django.db import models
 from djoser.serializers import UserSerializer
 from rest_framework import serializers
 
 
 from .models import Profile
-from ..partners.serializers import SharedFilesSerializer
+from ..partners.serializers import OrganizationSerializer
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         exclude = ['user', 'organization']
-
+    
     def to_representation(self, instance):
         repr_ = super().to_representation(instance)
-        repr_['shared'] = SharedFilesSerializer(instance.shared_files.all(), many=True).data
+        repr_['organization'] = OrganizationSerializer(instance.organization).data
         return repr_
-    
+
 
 class CustomUserListSerializer(serializers.ListSerializer):
     def to_representation(self, data):
         iterable = data if isinstance(data, models.Manager) else data.all()
-        
+
         return [{
             'id': item.id,
             'username': item.username,
