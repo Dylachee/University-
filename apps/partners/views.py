@@ -6,15 +6,14 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Aim, Book, Objective, Project, SharedFiles, Meeting
 from .serializers import (AimSerializer, BookSerializer, ObjectiveSerializer,
-                          ProjectSerializer, SharedFilesSerializer,MeetingSerializer)
+                          ProjectSerializer, SharedFilesSerializer, MeetingSerializer)
 from rest_framework.parsers import MultiPartParser, FormParser
 
 
-
-
-
-
-class SharedFileView(generics.ListCreateAPIView):
+class SharedFileViewSet(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        mixins.DestroyModelMixin,
+                        viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = SharedFilesSerializer
     queryset = SharedFiles.objects.filter(user=None)
@@ -23,6 +22,7 @@ class SharedFileView(generics.ListCreateAPIView):
 class BookViewSet(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
+                  mixins.DestroyModelMixin,
                   viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = BookSerializer
@@ -73,6 +73,7 @@ class ObjectiveCreateView(generics.CreateAPIView):
             context['aim'] = self.aim
         return context
 
+
 class MeetingListCreateView(generics.ListCreateAPIView):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
@@ -81,6 +82,7 @@ class MeetingListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save()
+
 
 class MeetingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Meeting.objects.all()
